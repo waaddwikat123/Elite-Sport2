@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteSport | My Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shop-style.css"> 
+
+    <link rel="stylesheet" href="profile-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header id="main-header2" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
+                <li><a href="#">AI Trainer</a></li>
+                <li><a href="#">Progress</a></li>
+            </ul>
+          <div class="nav-icons">
+    <!-- أيقونة السلة -->
+    <a href="cart.html" class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge" id="cart-count">0</span>
+    </a>
+
+    <!-- المنطقة التي ستتغير (دخول أو بروفايل) -->
+    <div id="user-auth-area">
+        <a href="signin.html" class="user-link-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Sign In</span>
+        </a>
+    </div>
+</div>
+        </nav>
+    </header>
+    <main class="profile-container">
+        <!-- القائمة الجانبية (Sidebar) -->
+        <aside class="profile-sidebar">
+            <div class="user-brief">
+                <img src="https://ui-avatars.com/api/?name=Elite+Member&background=ff6b35&color=fff" id="profile-img" alt="">
+                <h3 id="profile-name">John Doe</h3>
+                <p id="profile-email">john@example.com</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active"><i class="fa-solid fa-id-card"></i> Account Info</a>
+                <a href="#" onclick="showSection('orders')"><i class="fa-solid fa-box"></i> My Orders</a>
+                <a href="#"><i class="fa-solid fa-location-dot"></i> Delivery Addresses</a>
+                <a href="#"><i class="fa-solid fa-heart"></i> Wishlist</a>
+                <hr>
+      
+                <a href="#" onclick="logout()" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
+            </nav>
+        </aside>
+
+        <!-- المحتوى الرئيسي (Dashboard) -->
+        <section class="profile-content">
+            <div class="dashboard-header">
+                <h1>My <span class="orange-text">Profile</span></h1>
+                <p>Manage your account and track your orders.</p>
+            </div>
+
+            <!-- بطاقات الإحصائيات -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span>Total Orders</span>
+                    <strong id="total-orders-count">3</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Total Spent</span>
+                    <strong id="total-spent-amount">$1,814.94</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Latest Status</span>
+                    <strong class="status-delivered">Delivered</strong>
+                </div>
+            </div>
+
+            <!-- قائمة الطلبات الأخيرة -->
+            <div class="recent-orders">
+                <div class="section-title">
+                    <h3>Recent Orders</h3>
+                    <a href="#">View All</a>
+                </div>
+
+                <div class="order-card">
+                    <div class="order-info">
+                        <strong>Order #ORD-001234</strong>
+                        <span>2026-04-10</span>
+                    </div>
+                    <div class="order-price">$379.98</div>
+                    <div class="order-status delivered">Delivered</div>
+                    <button class="btn-detail">Details</button>
+                </div>
+
+                <div class="order-card">
+                    <div class="order-info">
+                        <strong>Order #ORD-001235</strong>
+                        <span>2026-04-14</span>
+                    </div>
+                    <div class="order-price">$1,299.99</div>
+                    <div class="order-status processing">Processing</div>
+                    <button class="btn-detail">Details</button>
+                </div>
+            </div>
+        </section>
+    </main>
+<!-- Modal لتفاصيل الطلب -->
+<div id="detailsModal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeDetails()">&times;</span>
+        <h3>Order Details</h3>
+        <div id="order-items-details">
+            <!-- سيتم تعبئتها بالجافا سكربت -->
+        </div>
+    </div>
+</div>
+    <script src="script.js"></script>
+    <script src="shop-script.js"></script>
+
+    <script>
+ document.addEventListener('DOMContentLoaded', () => {
+    // عرض بيانات المستخدم
+    document.getElementById('profile-name').innerText = localStorage.getItem('userName') || "Elite Member";
+    document.getElementById('profile-email').innerText = localStorage.getItem('userEmail') || "email@example.com";
+    renderOrders();
+});
+
+function renderOrders() {
+    const ordersList = document.querySelector('.recent-orders');
+    const orders = JSON.parse(localStorage.getItem('userOrders')) || [];
+    
+    if (orders.length === 0) {
+        ordersList.innerHTML = '<h3>Recent Orders</h3><p style="color:#888; padding:40px; text-align:center;">No orders found yet.</p>';
+        return;
+    }
+
+    let ordersHtml = '<h3>Recent Orders</h3><a href="#" onclick="location.reload()">Refresh</a>';
+    let totalSpent = 0;
+
+    orders.forEach((order, index) => {
+        totalSpent += parseFloat(order.total.replace('$', ''));
+        ordersHtml += `
+            <div class="order-card" style="display:flex; justify-content:space-between; align-items:center; padding:20px; margin-bottom:15px; background:white; border-radius:20px; border:1px solid #eee; box-shadow:0 4px 10px rgba(0,0,0,0.02);">
+                <div class="order-info">
+                    <strong style="color:#000; font-size:16px;">Order #ORD-${order.id}</strong>
+                    <span style="color:#999; font-size:13px;">${order.date}</span>
+                </div>
+                <div style="font-weight:900; font-size:18px; color:#000;">${order.total}</div>
+                <div style="padding:5px 15px; border-radius:50px; font-size:12px; font-weight:800; background:#fff5e6; color:#ff9500;">${order.status}</div>
+                <button class="btn-detail" onclick="showOrderDetails(${index})" style="background:#ff6b35; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; font-weight:700;">Details</button>
+            </div>
+        `;
+    });
+
+    ordersList.innerHTML = ordersHtml;
+    document.getElementById('total-orders-count').innerText = orders.length;
+    document.getElementById('total-spent-amount').innerText = "$" + totalSpent.toFixed(2);
+}
+
+function showOrderDetails(index) {
+    const orders = JSON.parse(localStorage.getItem('userOrders'));
+    const order = orders[index];
+    const detailsContainer = document.getElementById('order-items-details');
+    
+    let itemsHtml = `<h4 style="margin-bottom:20px; color:#000;">Items in Order #ORD-${order.id}</h4>`;
+    
+    order.items.forEach(item => {
+        itemsHtml += `
+            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px; border-bottom:1px solid #f5f5f7; padding-bottom:10px;">
+                <img src="${item.img}" style="width:60px; height:60px; border-radius:10px; object-fit:cover;">
+                <div style="flex:1;">
+                    <strong style="display:block; color:#000;">${item.name}</strong>
+                    <span style="color:#888; font-size:13px;">Qty: ${item.qty || 1}</span>
+                </div>
+                <b style="color:#ff6b35;">${item.price}</b>
+            </div>
+        `;
+    });
+    
+    itemsHtml += `<div style="text-align:right; margin-top:20px; font-size:20px;"><strong>Total: ${order.total}</strong></div>`;
+
+    detailsContainer.innerHTML = itemsHtml;
+    document.getElementById('detailsModal').style.display = 'flex';
+}
+
+function closeDetails() {
+    document.getElementById('detailsModal').style.display = 'none';
+}
+ </script>
+
+    <footer class="main-footer">
+    <div class="footer-container">
+        <!-- العمود الأول: اللوجو والوصف -->
+        <div class="footer-col brand-col">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Elite Sport Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <p>Premium fitness equipment powered by AI-driven training plans. Transform your home into a professional gym.</p>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <!-- العمود الثاني: Shop (تم ربطها بباراميتر الفلتر) -->
+        <div class="footer-col">
+    <h4>Shop</h4>
+    <ul id="footer-shop-links">
+        <!-- أضفنا data-filter لترتبط مع كود الجافا سكربت -->
+        <li><a href="shop.html?filter=strength" data-filter="strength">Dumbbells</a></li>
+        <li><a href="shop.html?filter=resistance" data-filter="resistance">Resistance Bands</a></li>
+        <li><a href="shop.html?filter=strength" data-filter="strength">Weight Benches</a></li>
+        <li><a href="shop.html?filter=cardio" data-filter="cardio">Cardio Equipment</a></li>
+        <li><a href="shop.html?filter=yoga" data-filter="yoga">Yoga & Stretch</a></li>
+    </ul>
+</div>
+
+        <!-- العمود الثالث: Support -->
+        <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="shop.html" onclick="startSmartAI()">AI Trainer</a></li>
+                <li><a href="#">Progress Tracking</a></li>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Returns Policy</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الرابع: Company -->
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <!-- تم ربطها بالـ ID الخاص بقسم أباوت في الصفحة الرئيسية -->
+                <li><a href="index.html#about-section">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="index.html#feedback-section">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الخامس: Newsletter -->
+        <div class="footer-col newsletter-col">
+            <h4>Stay Updated</h4>
+            <p>Get workout tips and exclusive offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2024 EliteSport Palestine. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>

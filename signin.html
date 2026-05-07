@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteSport | Authentication</title>
+    <!-- استدعاء ملفات الـ CSS بالترتيب -->
+    <link rel="stylesheet" href="style.css"> <!-- للهيدر والفوتر -->
+    <link rel="stylesheet" href="signin-style.css"> <!-- لتصميم الفورم فقط -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="main-header" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="#">AI Trainer</a></li>
+                <li><a href="#">Progress</a></li>
+            </ul>
+            <div class="nav-icons">
+    <!-- أيقونة السلة -->
+    <a href="cart.html" class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge" id="cart-count">0</span>
+    </a>
+
+    <!-- المنطقة التي ستتغير (دخول أو بروفايل) -->
+    <div id="user-auth-area">
+        <a href="signin.html" class="user-link-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Sign In</span>
+        </a>
+    </div>
+</div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="auth-wrapper">
+        <div class="auth-card">
+            <!-- قسم تسجيل الدخول -->
+            <div id="login-section">
+                <h2>Welcome Back!</h2>
+                <p>Sign in to complete your purchase and track your progress.</p>
+                <form class="auth-form" onsubmit="handleAuth(event, 'login')">
+                    <div class="input-field">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Sign In & Continue</button>
+                </form>
+                <p class="toggle-text">Don't have an account? <a href="#" onclick="toggleAuth()">Create one now</a></p>
+            </div>
+
+            <!-- قسم إنشاء حساب جديد (مخفي) -->
+            <div id="signup-section" style="display: none;">
+                <h2>Join Elite Sport</h2>
+                <p>Start your professional home gym journey today.</p>
+                <form class="auth-form" onsubmit="handleAuth(event, 'signup')">
+                    <div class="input-field">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Create Password" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Create Account</button>
+                </form>
+                <p class="toggle-text">Already a member? <a href="#" onclick="toggleAuth()">Sign In</a></p>
+            </div>
+        </div>
+    </main>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+        <!-- العمود الأول: اللوجو والوصف -->
+        <div class="footer-col brand-col">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Elite Sport Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <p>Premium fitness equipment powered by AI-driven training plans. Transform your home into a professional gym.</p>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <!-- العمود الثاني: Shop (تم ربطها بباراميتر الفلتر) -->
+       <!-- العمود الثاني: Shop داخل الفوتر -->
+<div class="footer-col">
+    <h4>Shop</h4>
+    <ul id="footer-filter-links">
+        <!-- أضفنا data-filter لربطها برمجياً بالفلتر العلوي -->
+        <li><a href="shop.html?filter=strength" data-filter="strength">Dumbbells</a></li>
+        <li><a href="shop.html?filter=resistance" data-filter="resistance">Resistance Bands</a></li>
+        <li><a href="shop.html?filter=strength" data-filter="strength">Weight Benches</a></li>
+        <li><a href="shop.html?filter=cardio" data-filter="cardio">Cardio Equipment</a></li>
+        <li><a href="shop.html?filter=yoga" data-filter="yoga">Yoga & Stretch</a></li>
+    </ul>
+</div>
+
+        <!-- العمود الثالث: Support -->
+        <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="shop.html" onclick="startSmartAI()">AI Trainer</a></li>
+                <li><a href="#">Progress Tracking</a></li>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Returns Policy</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الرابع: Company -->
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <!-- تم ربطها بالـ ID الخاص بقسم أباوت في الصفحة الرئيسية -->
+                <li><a href="index.html#about-section">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="index.html#feedback-section">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الخامس: Newsletter -->
+        <div class="footer-col newsletter-col">
+            <h4>Stay Updated</h4>
+            <p>Get workout tips and exclusive offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2024 EliteSport Palestine. All rights reserved.</p>
+    </div>
+</footer>
+    <!-- JS Link -->
+    <script src="shop-script.js"></script>
+     <script src="script.js"></script>
+
+    <!-- Scripts -->
+    <script>
+        // التبديل بين الفورمين
+        function toggleAuth() {
+            const login = document.getElementById('login-section');
+            const signup = document.getElementById('signup-section');
+            if (login.style.display === 'none') {
+                login.style.display = 'block'; signup.style.display = 'none';
+            } else {
+                login.style.display = 'none'; signup.style.display = 'block';
+            }
+        }
+
+        // معالجة الدخول أو التسجيل
+ function handleAuth(e, type) {
+    e.preventDefault();
+    
+    let nameValue = "";
+    let emailValue = "";
+
+    if (type === 'signup') {
+        // في التسجيل: نأخذ الاسم من أول حقل نصي
+        const nameInput = document.querySelector('#signup-section input[type="text"]');
+        const emailInput = document.querySelector('#signup-section input[type="email"]');
+        nameValue = nameInput.value;
+        emailValue = emailInput.value;
+    } else {
+        // في الدخول: بما أنه لا يوجد حقل اسم، نضع اسماً افتراضياً أو نأخذه من الإيميل
+        const emailInput = document.querySelector('#login-section input[type="email"]');
+        emailValue = emailInput.value;
+        // نأخذ الجزء الأول من الإيميل كاسم (مثلاً: waad من waad@gmail.com)
+        nameValue = emailValue.split('@')[0]; 
+    }
+
+    // حفظ البيانات في المتصفح
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('userName', nameValue);
+    localStorage.setItem('userEmail', emailValue);
+
+    alert("Welcome, " + nameValue + "!");
+    
+    // التوجه لصفحة الهوم (index.html) لتحديث الهيدر
+    window.location.href = 'index.html'; 
+}
+    </script>
+</body>
+</html>

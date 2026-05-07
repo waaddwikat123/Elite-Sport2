@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteSport | Your Cart</title>
+    <link rel="stylesheet" href="style.css"> <!-- الهيدر والفوتر -->
+    <link rel="stylesheet" href="cart-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="cart-page">
+
+    <!-- Header -->
+    <header id="main-header2" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
+                <li><a href="#">AI Trainer</a></li>
+                <li><a href="#">Progress</a></li>
+            </ul>
+           <div class="nav-icons">
+    <!-- أيقونة السلة -->
+    <a href="cart.html" class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge" id="cart-count">0</span>
+    </a>
+
+    <!-- المنطقة التي ستتغير (دخول أو بروفايل) -->
+    <div id="user-auth-area">
+        <a href="signin.html" class="user-link-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Sign In</span>
+        </a>
+    </div>
+</div>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+        <div class="cart-wrapper">
+            <!-- قائمة المشتريات -->
+            <div class="items-column">
+                <h1>Your <span class="orange-text">Cart</span></h1>
+                <div id="cart-items-container">
+                    <!-- سيتم تعبئتها بواسطة JS -->
+                </div>
+            </div>
+
+            <!-- ملخص الطلب -->
+            <div class="summary-column">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-line"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+                    <div class="summary-line"><span>Shipping</span><span class="free">Free</span></div>
+                    <div class="summary-line total"><span>Total</span><span id="grand-total">$0.00</span></div>
+                    
+                    <form class="checkout-form" onsubmit="confirmOrder(event)">
+                        <input type="text" placeholder="Full Name" required>
+                        <input type="tel" placeholder="Phone Number" required>
+                        <input type="text" placeholder="Delivery Address" required>
+                        <button type="submit" class="btn-confirm">Confirm Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+<!-- Footer -->
+    <footer class="main-footer">
+    <div class="footer-container">
+        <!-- العمود الأول: اللوجو والوصف -->
+        <div class="footer-col brand-col">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Elite Sport Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <p>Premium fitness equipment powered by AI-driven training plans. Transform your home into a professional gym.</p>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <!-- العمود الثاني: Shop (تم ربطها بباراميتر الفلتر) -->
+        <div class="footer-col">
+    <h4>Shop</h4>
+    <ul id="footer-shop-links">
+        <!-- أضفنا data-filter لترتبط مع كود الجافا سكربت -->
+        <li><a href="shop.html?filter=strength" data-filter="strength">Dumbbells</a></li>
+        <li><a href="shop.html?filter=resistance" data-filter="resistance">Resistance Bands</a></li>
+        <li><a href="shop.html?filter=strength" data-filter="strength">Weight Benches</a></li>
+        <li><a href="shop.html?filter=cardio" data-filter="cardio">Cardio Equipment</a></li>
+        <li><a href="shop.html?filter=yoga" data-filter="yoga">Yoga & Stretch</a></li>
+    </ul>
+</div>
+
+        <!-- العمود الثالث: Support -->
+        <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="shop.html" onclick="startSmartAI()">AI Trainer</a></li>
+                <li><a href="#">Progress Tracking</a></li>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Returns Policy</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الرابع: Company -->
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <!-- تم ربطها بالـ ID الخاص بقسم أباوت في الصفحة الرئيسية -->
+                <li><a href="index.html#about-section">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="index.html#feedback-section">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الخامس: Newsletter -->
+        <div class="footer-col newsletter-col">
+            <h4>Stay Updated</h4>
+            <p>Get workout tips and exclusive offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2024 EliteSport Palestine. All rights reserved.</p>
+    </div>
+</footer>
+    <script src="cart-script.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

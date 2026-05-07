@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteSport | Professional Shop</title>
+    <!-- استدعاء ملفات الـ CSS -->
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="shop-style.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="shop-page">
+
+    <!-- الهيدر الأبيض الثابت -->
+    <header id="main-header2" class="scrolled">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
+                <li><a href="#">AI Trainer</a></li>
+                <li><a href="#">Progress</a></li>
+            </ul>
+          <div class="nav-icons">
+    <!-- أيقونة السلة -->
+    <a href="cart.html" class="cart-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge" id="cart-count">0</span>
+    </a>
+
+    <!-- المنطقة التي ستتغير (دخول أو بروفايل) -->
+    <div id="user-auth-area">
+        <a href="signin.html" class="user-link-item">
+            <i class="fa-regular fa-user"></i>
+            <span>Sign In</span>
+        </a>
+    </div>
+</div>
+        </nav>
+    </header>
+
+    <main class="shop-container">
+        <section class="shop-top">
+            <h1>Shop All <span class="orange-text">Equipment</span></h1>
+            <div class="filters-wrapper">
+                <button class="filter-btn active" data-filter="all">All Items</button>
+                <button class="filter-btn" data-filter="strength">Strength</button>
+                <button class="filter-btn" data-filter="resistance">Resistance</button>
+                <button class="filter-btn" data-filter="cardio">Cardio</button>
+                <button class="filter-btn" data-filter="yoga">Yoga</button>
+            </div>
+        </section>
+
+        <!-- AI Assistant Banner -->
+        <section class="ai-banner" id="ai-banner">
+            <div class="ai-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="ai-info">
+                <h3 id="ai-status">Need a Smart Suggestion?</h3>
+                <p id="ai-msg">Our AI can analyze your fitness goals and find the best gear for you.</p>
+            </div>
+            <button class="btn-ai-trigger" onclick="startSmartAI()">Ask AI Assistant</button>
+        </section>
+
+        <!-- شبكة المنتجات (12 منتج مع صور حقيقية وأوصاف) -->
+        <div class="products-grid" id="products-grid">
+            
+            <!-- 1. Strength -->
+            <div class="product-card" data-category="strength">
+                <div class="p-img"><span class="tag">Best Seller</span><img src="https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Adjustable Dumbbells</h4>
+                    <p class="tool-info">Cast iron finish, 5-50 lbs range, space-saving design.</p>
+                    <div class="p-flex"><span>$129.99</span><button class="add-cart" onclick="addToCart(event, 'Adjustable Dumbbells', '129.99', 'https://images.unsplash.com/photo-1638536532686-d610adfc8e5c?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 2. Strength -->
+            <div class="product-card" data-category="strength">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1533228891704-62492d836c3a?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Pro Weight Bench</h4>
+                    <p class="tool-info">Steel frame with 7 incline levels for full-body strength.</p>
+                    <div class="p-flex"><span>$185.00</span><button class="add-cart" onclick="addToCart(event, 'Pro Weight Bench', '185.00', 'https://images.unsplash.com/photo-1533228891704-62492d836c3a?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 3. Strength -->
+            <div class="product-card" data-category="strength">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Classic Kettlebell</h4>
+                    <p class="tool-info">Cast iron with textured handle for perfect swing control.</p>
+                    <div class="p-flex"><span>$45.00</span><button class="add-cart" onclick="addToCart(event, 'Classic Kettlebell', '45.00', 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 4. Resistance -->
+            <div class="product-card" data-category="resistance">
+                <div class="p-img"><span class="tag">Popular</span><img src="https://images.unsplash.com/photo-1598289431512-b97b0917a63e?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Resistance Band Set</h4>
+                    <p class="tool-info">5 tension levels with door anchor and travel bag.</p>
+                    <div class="p-flex"><span>$29.99</span><button class="add-cart" onclick="addToCart(event, 'Resistance Band Set', '29.99', 'https://images.unsplash.com/photo-1598289431512-b97b0917a63e?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 5. Resistance -->
+            <div class="product-card" data-category="resistance">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1591940742878-13aba4b7a35e?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Power Pull-up Bar</h4>
+                    <p class="tool-info">Wall-mounted heavy steel, supports up to 200kg.</p>
+                    <div class="p-flex"><span>$59.00</span><button class="add-cart" onclick="addToCart(event, 'Power Pull-up Bar', '59.00', 'https://images.unsplash.com/photo-1591940742878-13aba4b7a35e?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 6. Cardio -->
+            <div class="product-card" data-category="cardio">
+                <div class="p-img"><span class="tag">New</span><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Pro Jump Rope</h4>
+                    <p class="tool-info">Anti-slip handles with fast rotation ball-bearings.</p>
+                    <div class="p-flex"><span>$19.99</span><button class="add-cart" onclick="addToCart(event, 'Pro Jump Rope', '19.99', 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 7. Cardio -->
+            <div class="product-card" data-category="cardio">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1599058917232-d750c185967c?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Heavy Boxing Bag</h4>
+                    <p class="tool-info">High-impact foam, perfect for home cardio sessions.</p>
+                    <div class="p-flex"><span>$150.00</span><button class="add-cart" onclick="addToCart(event, 'Heavy Boxing Bag', '150.00', 'https://images.unsplash.com/photo-1599058917232-d750c185967c?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 8. Cardio -->
+            <div class="product-card" data-category="cardio">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Indoor Spin Bike</h4>
+                    <p class="tool-info">Magnetic silent resistance with built-in monitor.</p>
+                    <div class="p-flex"><span>$399.00</span><button class="add-cart" onclick="addToCart(event, 'Indoor Spin Bike', '399.00', 'https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 9. Cardio -->
+            <div class="product-card" data-category="cardio">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1584733960111-99c88730b177?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Smart Treadmill</h4>
+                    <p class="tool-info">Foldable design, Bluetooth enabled for training apps.</p>
+                    <div class="p-flex"><span>$899.00</span><button class="add-cart" onclick="addToCart(event, 'Smart Treadmill', '899.00', 'https://images.unsplash.com/photo-1584733960111-99c88730b177?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 10. Yoga -->
+            <div class="product-card" data-category="yoga">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Eco Yoga Mat</h4>
+                    <p class="tool-info">Dual-layer non-slip texture, 100% biodegradable TPE.</p>
+                    <div class="p-flex"><span>$35.00</span><button class="add-cart" onclick="addToCart(event, 'Eco Yoga Mat', '35.00', 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 11. Yoga -->
+            <div class="product-card" data-category="yoga">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Yoga Block Set</h4>
+                    <p class="tool-info">High-density supportive foam for balance training.</p>
+                    <div class="p-flex"><span>$15.00</span><button class="add-cart" onclick="addToCart(event, 'Yoga Block Set', '15.00', 'https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?w=500')">Add</button></div>
+                </div>
+            </div>
+
+            <!-- 12. Strength -->
+            <div class="product-card" data-category="strength">
+                <div class="p-img"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500" alt=""></div>
+                <div class="p-desc">
+                    <h4>Weightlifting Belt</h4>
+                    <p class="tool-info">Reinforced genuine leather for maximum back support.</p>
+                    <div class="p-flex"><span>$45.00</span><button class="add-cart" onclick="addToCart(event, 'Weightlifting Belt', '45.00', 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500')">Add</button></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Custom AI Modal -->
+    <div class="ai-modal-overlay" id="aiModal">
+        <div class="ai-modal-content">
+            <button class="close-modal" onclick="closeAIModal()">&times;</button>
+            <div class="modal-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h2>Smart <span class="orange-text">AI Recommendation</span></h2>
+            <p>Tell us your fitness goal, and we will find the perfect gear.</p>
+            <div class="modal-input-group">
+                <input type="text" id="aiInput" placeholder="e.g. Muscle, Weight loss, Yoga...">
+                <button onclick="processAIRecommendation()" class="btn-recommend">Find My Gear</button>
+            </div>
+            <div class="quick-tags">
+                <span onclick="setGoal('Muscle')">#Muscle</span>
+                <span onclick="setGoal('Cardio')">#Cardio</span>
+                <span onclick="setGoal('Yoga')">#Yoga</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+    <div class="footer-container">
+        <!-- العمود الأول: اللوجو والوصف -->
+        <div class="footer-col brand-col">
+            <a href="index.html" class="logo">
+                <img src="img/logo.png" alt="Elite Sport Logo">
+                <span class="logo-text">Elite <span>Sport</span></span>
+            </a>
+            <p>Premium fitness equipment powered by AI-driven training plans. Transform your home into a professional gym.</p>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+        <!-- العمود الثاني: Shop (تم ربطها بباراميتر الفلتر) -->
+        <div class="footer-col">
+    <h4>Shop</h4>
+    <ul id="footer-shop-links">
+        <!-- أضفنا data-filter لترتبط مع كود الجافا سكربت -->
+        <li><a href="shop.html?filter=strength" data-filter="strength">Dumbbells</a></li>
+        <li><a href="shop.html?filter=resistance" data-filter="resistance">Resistance Bands</a></li>
+        <li><a href="shop.html?filter=strength" data-filter="strength">Weight Benches</a></li>
+        <li><a href="shop.html?filter=cardio" data-filter="cardio">Cardio Equipment</a></li>
+        <li><a href="shop.html?filter=yoga" data-filter="yoga">Yoga & Stretch</a></li>
+    </ul>
+</div>
+
+        <!-- العمود الثالث: Support -->
+        <div class="footer-col">
+            <h4>Support</h4>
+            <ul>
+                <li><a href="shop.html" onclick="startSmartAI()">AI Trainer</a></li>
+                <li><a href="#">Progress Tracking</a></li>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Returns Policy</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الرابع: Company -->
+        <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <!-- تم ربطها بالـ ID الخاص بقسم أباوت في الصفحة الرئيسية -->
+                <li><a href="index.html#about-section">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="index.html#feedback-section">Contact</a></li>
+            </ul>
+        </div>
+
+        <!-- العمود الخامس: Newsletter -->
+        <div class="footer-col newsletter-col">
+            <h4>Stay Updated</h4>
+            <p>Get workout tips and exclusive offers.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2024 EliteSport Palestine. All rights reserved.</p>
+    </div>
+</footer>
+    <!-- استدعاء ملفات الجافا سكربت -->
+    <script src="script.js"></script>
+    <script src="shop-script.js"></script>
+</body>
+</html>
