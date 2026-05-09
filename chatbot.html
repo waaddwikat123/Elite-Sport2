@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GymGPT</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    background: #212121;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.chat-wrapper {
+    width: 100%;
+    max-width: 900px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #212121;
+}
+.header {
+    padding: 20px;
+    border-bottom: 1px solid #333;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.message-row {
+    display: flex;
+    width: 100%;
+}
+.user-row { justify-content: flex-end; }
+.bot-row  { justify-content: flex-start; }
+.message {
+    max-width: 75%;
+    padding: 16px;
+    border-radius: 18px;
+    line-height: 1.6;
+    font-size: 15px;
+    white-space: pre-wrap;
+}
+.user {
+    background: #2f2f2f;
+    color: white;
+}
+.bot {
+    background: #171717;
+    border: 1px solid #333;
+}
+.input-container {
+    padding: 20px;
+    border-top: 1px solid #333;
+    background: #212121;
+}
+.input-box {
+    background: #2f2f2f;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.input-box textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    color: white;
+    font-size: 16px;
+    max-height: 150px;
+    padding: 10px;
+}
+.send-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    color: black;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+.send-btn:hover { opacity: 0.85; }
+.typing {
+    opacity: 0.7;
+    font-style: italic;
+}
+.welcome {
+    margin: auto;
+    text-align: center;
+    opacity: 0.9;
+}
+.welcome h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+.welcome p { color: #b4b4b4; }
+</style>
+</head>
+<body>
+
+<div class="chat-wrapper">
+    <div class="header">Your AI mate</div>
+
+    <div class="messages" id="messages">
+        <div class="welcome" id="welcome">
+            <h1>Ask anything</h1>
+            <p>Your AI Fitness Coach</p>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <div class="input-box">
+            <textarea
+                id="userInput"
+                rows="1"
+                placeholder="Ask anything about gym, nutrition, supplements..."
+            ></textarea>
+            <button class="send-btn" onclick="sendMessage()">↑</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const API_KEY = "YOUR_GROQ_API_KEY_HERE";
+const messagesEl = document.getElementById("messages");
+const input      = document.getElementById("userInput");
+const welcome    = document.getElementById("welcome");
+
+input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+
+input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+});
+
+function addMessage(text, sender) {
+    welcome.style.display = "none";
+
+    const row = document.createElement("div");
+    row.classList.add("message-row", sender === "user" ? "user-row" : "bot-row");
+
+    const message = document.createElement("div");
+    message.classList.add("message", sender);
+    message.innerText = text;
+
+    row.appendChild(message);
+    messagesEl.appendChild(row);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+
+    return message;
+}
+
+async function sendMessage() {
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    addMessage(userText, "user");
+    input.value = "";
+    input.style.height = "auto";
+
+    const typingMessage = addMessage("Typing...", "bot");
+    typingMessage.classList.add("typing");
+
+    try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + API_KEY
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-versatile",
+                max_tokens: 1000,
+                messages: [
+                    {
+                        role: "system",
+                        content: `You are GymGPT, a professional AI fitness coach.
+Help with: workouts, muscle gain, supplements, gym equipment, fat loss, nutrition, bodybuilding, and motivation.
+Be concise, practical, and motivating.`
+                    },
+                    {
+                        role: "user",
+                        content: userText
+                    }
+                ]
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            typingMessage.innerText = "API Error: " + data.error.message;
+            return;
+        }
+
+        const botReply = data.choices?.[0]?.message?.content;
+
+        if (!botReply) {
+            typingMessage.innerText = "No response from AI.";
+            return;
+        }
+
+        typingMessage.classList.remove("typing");
+        typingMessage.innerText = botReply;
+
+    } catch (error) {
+        console.error(error);
+        typingMessage.innerText = "Failed to connect to AI.";
+    }
+}
+</script>
+
+</body>
+</html>
