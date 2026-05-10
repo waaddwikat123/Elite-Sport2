@@ -727,3 +727,15 @@ button {
 .profile-active:hover {
     transform: scale(1.05);
 }
+
+.robot-icon {
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.robot-icon:hover {
+    color: var(--primary);
+}
