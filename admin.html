@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elite Sport | Admin Dashboard</title>
+  <link rel="stylesheet" href="admin-style.css" />
+  <script defer src="admin-script.js"></script>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon">🏋️</div>
+      <div>
+        <h1>Elite Sport</h1>
+        <p>Admin Panel</p>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <a class="nav-link active" href="#dashboard">▦ <span>Dashboard</span></a>
+      <a class="nav-link" href="#products">📦 <span>Products</span></a>
+      <a class="nav-link" href="#orders">🛒 <span>Orders</span></a>
+      <a class="nav-link" href="#users">👥 <span>Users</span></a>
+      <a class="nav-link" href="#analytics">📊 <span>Analytics</span></a>
+      <a class="nav-link" href="#messages">💬 <span>Messages</span></a>
+      <a class="nav-link" href="#settings">⚙️ <span>Settings</span></a>
+    </nav>
+
+    <button class="logout-btn" id="logoutBtn">↪ Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div>
+        <h2>Admin Dashboard</h2>
+        <p>Welcome back, Admin</p>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="globalSearch" placeholder="Search dashboard..." />
+        </div>
+        <button class="notification-btn">🔔<span></span></button>
+        <div class="admin-profile">
+          <div class="profile-text">
+            <strong>Admin User</strong>
+            <small>admin@elitesport.com</small>
+          </div>
+          <div class="avatar">A</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="content" id="dashboard">
+      <section class="stats-grid">
+        <article class="stat-card orange">
+          <div class="stat-icon">📦</div>
+          <p>Total Products</p>
+          <h3 id="totalProducts">0</h3>
+          <span>Available products</span>
+        </article>
+        <article class="stat-card blue">
+          <div class="stat-icon">🛒</div>
+          <p>Total Orders</p>
+          <h3 id="totalOrders">0</h3>
+          <span>Customer orders</span>
+        </article>
+        <article class="stat-card green">
+          <div class="stat-icon">💵</div>
+          <p>Total Revenue</p>
+          <h3 id="totalRevenue">$0</h3>
+          <span>Confirmed revenue</span>
+        </article>
+        <article class="stat-card purple">
+          <div class="stat-icon">👥</div>
+          <p>Total Users</p>
+          <h3 id="totalUsers">0</h3>
+          <span>Registered users</span>
+        </article>
+      </section>
+
+      <section class="panel" id="products">
+        <div class="panel-header">
+          <div>
+            <h3>Products Management</h3>
+            <p>Add, edit, delete and filter store products.</p>
+          </div>
+          <button class="primary-btn" id="openProductModal">＋ Add Product</button>
+        </div>
+
+        <div class="tools-row">
+          <div class="input-with-icon">
+            <span>🔍</span>
+            <input type="text" id="productSearch" placeholder="Search products..." />
+          </div>
+          <select id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Equipment">Equipment</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Nutrition">Nutrition</option>
+            <option value="Yoga">Yoga</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="orders">
+        <div class="panel-header">
+          <div>
+            <h3>Orders Management</h3>
+            <p>Track customer orders and update order status.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Products</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="users">
+        <div class="panel-header">
+          <div>
+            <h3>Users Management</h3>
+            <p>View and control customer accounts.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Orders</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="analytics-grid" id="analytics">
+        <section class="panel chart-panel">
+          <h3>Sales Overview</h3>
+          <canvas id="salesChart" height="230"></canvas>
+        </section>
+        <section class="panel chart-panel">
+          <h3>Orders Growth</h3>
+          <canvas id="ordersChart" height="230"></canvas>
+        </section>
+      </section>
+
+      <section class="messages-grid" id="messages">
+        <section class="panel">
+          <div class="panel-header compact">
+            <h3>Customer Messages</h3>
+            <span class="counter">2 New</span>
+          </div>
+          <div id="messagesList" class="messages-list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header compact">
+            <h3>Recent Activity</h3>
+          </div>
+          <div id="activityList" class="activity-list"></div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <div class="modal" id="productModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add Product</h3>
+        <button id="closeProductModal">×</button>
+      </div>
+
+      <form id="productForm">
+        <input type="hidden" id="productId" />
+        <label>Product Name
+          <input type="text" id="productName" required placeholder="Nike Air Max 270" />
+        </label>
+        <label>Category
+          <select id="productCategory" required>
+            <option value="Footwear">Footwear</option>
+            <option value="Equipment">Equipment</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Nutrition">Nutrition</option>
+            <option value="Yoga">Yoga</option>
+          </select>
+        </label>
+        <label>Price
+          <input type="number" id="productPrice" min="0" step="0.01" required placeholder="149.99" />
+        </label>
+        <label>Stock
+          <input type="number" id="productStock" min="0" required placeholder="45" />
+        </label>
+        <label>Image URL
+          <input type="url" id="productImage" placeholder="https://example.com/image.jpg" />
+        </label>
+        <label>Description
+          <textarea id="productDescription" rows="3" placeholder="Short product description..."></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="secondary-btn" id="cancelProduct">Cancel</button>
+          <button type="submit" class="primary-btn">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</body>
+</html>
